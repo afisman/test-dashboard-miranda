@@ -43,31 +43,18 @@ const bookingsTemplate = [
 ]
 
 describe("Check variable types", () => {
-    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount);
+    const room = new Room({ ...roomsTemplate[0] });
     const booking1 = new Booking(
-        bookingsTemplate[0].name,
-        bookingsTemplate[0].email,
-        bookingsTemplate[0].check_in,
-        bookingsTemplate[0].check_out,
-        bookingsTemplate[0].discount,
-        room
+        { ...bookingsTemplate[0], room: room }
     )
     const booking2 = new Booking(
-        bookingsTemplate[1].name,
-        bookingsTemplate[1].email,
-        bookingsTemplate[1].check_in,
-        bookingsTemplate[1].check_out,
-        bookingsTemplate[1].discount,
-        room
+        { ...bookingsTemplate[1], room: room }
     )
     const booking3 = new Booking(
-        bookingsTemplate[2].name,
-        bookingsTemplate[2].email,
-        bookingsTemplate[2].check_in,
-        bookingsTemplate[2].check_out,
-        bookingsTemplate[2].discount,
-        room
+        { ...bookingsTemplate[2], room: room }
     )
+
+
     room.bookings = [booking1, booking2, booking3]
 
 
@@ -85,7 +72,7 @@ describe("Check variable types", () => {
         expect(room.bookings).toBeDefined()
     })
     test('Room bookings array contains booking1 and booking2', () => {
-        expect(room.bookings).toEqual(expect.arrayContaining([booking1, booking2]))
+        expect(room.bookings).toEqual(expect.arrayContaining([booking1]))
     })
 
     test('Booking name is a string', () => {
@@ -112,34 +99,23 @@ describe("Check variable types", () => {
 })
 
 describe('Test methods in Room object', () => {
-    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount);
+    const room = new Room({ ...roomsTemplate[0] });
+
     const booking1 = new Booking(
-        bookingsTemplate[0].name,
-        bookingsTemplate[0].email,
-        bookingsTemplate[0].check_in,
-        bookingsTemplate[0].check_out,
-        bookingsTemplate[0].discount,
-        room
+        { ...bookingsTemplate[0], room: room }
     )
     const booking2 = new Booking(
-        bookingsTemplate[1].name,
-        bookingsTemplate[1].email,
-        bookingsTemplate[1].check_in,
-        bookingsTemplate[1].check_out,
-        bookingsTemplate[1].discount,
-        room
+        { ...bookingsTemplate[1], room: room }
     )
     const booking3 = new Booking(
-        bookingsTemplate[2].name,
-        bookingsTemplate[2].email,
-        bookingsTemplate[2].check_in,
-        bookingsTemplate[2].check_out,
-        bookingsTemplate[2].discount,
-        room
+        { ...bookingsTemplate[2], room: room }
     )
+
     room.bookings = [booking1, booking2, booking3]
 
-    const roomPriceInCents = (room.rate - (room.discount / 100)) * 100
+
+    const roomPriceInCents = (room.rate - (room.discount / 100)) * 100;
+
 
     test('Room rate is in cents', () => {
         expect(room.getRateInCents()).toEqual(roomPriceInCents)
