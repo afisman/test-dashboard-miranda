@@ -54,9 +54,7 @@ describe("Check variable types", () => {
         { ...bookingsTemplate[2], room: room }
     )
 
-
     room.bookings = [booking1, booking2, booking3]
-
 
     test('Room name is a string', () => {
         expect(typeof room.name).toBe('string')
@@ -101,6 +99,16 @@ describe("Check variable types", () => {
 describe('Test methods in Room object', () => {
     const room = new Room({ ...roomsTemplate[0] });
 
+    const roomPriceInCents = (room.rate - (room.discount / 100)) * 100;
+
+    test('Room rate is in cents', () => {
+        expect(room.getRateInCents()).toEqual(roomPriceInCents)
+    })
+})
+
+describe('Test methods in Room object', () => {
+    const room = new Room({ ...roomsTemplate[0] });
+
     const booking1 = new Booking(
         { ...bookingsTemplate[0], room: room }
     )
@@ -113,11 +121,11 @@ describe('Test methods in Room object', () => {
 
     room.bookings = [booking1, booking2, booking3]
 
-
-    const roomPriceInCents = (room.rate - (room.discount / 100)) * 100;
-
-
-    test('Room rate is in cents', () => {
-        expect(room.getRateInCents()).toEqual(roomPriceInCents)
+    console.log(room.bookings)
+    test('Room is occupied in 2024-02-06', () => {
+        expect(room.isOccupied("2024-02-06")).toEqual(true)
+    })
+    test('Room is not occupied in 2024-02-07', () => {
+        expect(room.isOccupied("2024-02-07")).toBeFalsy()
     })
 })

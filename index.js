@@ -19,7 +19,13 @@ class Room {
     }
 
     isOccupied(date) {
-
+        let occupied = false;
+        let formattedDate = new Date(date)
+        this.bookings.map((booking) => {
+            if (new Date(booking.check_in) <= formattedDate && formattedDate < new Date(booking.check_out))
+                occupied = true
+        })
+        return occupied
     }
 
     occupancyPercentage(startDate, endDate) {
