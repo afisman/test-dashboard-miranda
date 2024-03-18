@@ -3,7 +3,7 @@ const { Room, Booking } = require('./index');
 const roomsTemplate = [
     {
         name: 'Suite-142',
-        rate: 265,
+        rate: 265.10,
         discount: 30
     },
     {
@@ -49,10 +49,27 @@ describe("Check variable types", () => {
         bookingsTemplate[0].email,
         bookingsTemplate[0].check_in,
         bookingsTemplate[0].check_out,
-        bookingsTemplate[0].discount
+        bookingsTemplate[0].discount,
+        room
     )
+    const booking2 = new Booking(
+        bookingsTemplate[1].name,
+        bookingsTemplate[1].email,
+        bookingsTemplate[1].check_in,
+        bookingsTemplate[1].check_out,
+        bookingsTemplate[1].discount,
+        room
+    )
+    const booking3 = new Booking(
+        bookingsTemplate[2].name,
+        bookingsTemplate[2].email,
+        bookingsTemplate[2].check_in,
+        bookingsTemplate[2].check_out,
+        bookingsTemplate[2].discount,
+        room
+    )
+    room.bookings = [booking1, booking2, booking3]
 
-    console.log(booking1)
 
     test('Room name is a string', () => {
         expect(typeof room.name).toBe('string')
@@ -60,5 +77,71 @@ describe("Check variable types", () => {
 
     test('Room rate is a number', () => {
         expect(typeof room.rate).toBe('number')
+    })
+    test('Room discount is a number', () => {
+        expect(typeof room.discount).toBe('number')
+    })
+    test('Room bookings array is defined', () => {
+        expect(room.bookings).toBeDefined()
+    })
+    test('Room bookings array contains booking1 and booking2', () => {
+        expect(room.bookings).toEqual(expect.arrayContaining([booking1, booking2]))
+    })
+
+    test('Booking name is a string', () => {
+        expect(typeof booking1.name).toBe('string')
+    })
+    test('Booking email is a string', () => {
+        expect(typeof booking1.email).toBe('string')
+    })
+    test('Booking check_in is a string', () => {
+        expect(typeof booking1.check_in).toBe('string')
+    })
+    test('Booking check_out is a string', () => {
+        expect(typeof booking1.check_out).toBe('string')
+    })
+    test('Booking discount is a number', () => {
+        expect(typeof booking1.discount).toBe('number')
+    })
+    test('Booking room is defined', () => {
+        expect(typeof booking1.room).toBeDefined()
+    })
+    test('Booking room equals Room object', () => {
+        expect(booking1.room).toEqual(room)
+    })
+})
+
+describe('Test methods in Room object', () => {
+    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount);
+    const booking1 = new Booking(
+        bookingsTemplate[0].name,
+        bookingsTemplate[0].email,
+        bookingsTemplate[0].check_in,
+        bookingsTemplate[0].check_out,
+        bookingsTemplate[0].discount,
+        room
+    )
+    const booking2 = new Booking(
+        bookingsTemplate[1].name,
+        bookingsTemplate[1].email,
+        bookingsTemplate[1].check_in,
+        bookingsTemplate[1].check_out,
+        bookingsTemplate[1].discount,
+        room
+    )
+    const booking3 = new Booking(
+        bookingsTemplate[2].name,
+        bookingsTemplate[2].email,
+        bookingsTemplate[2].check_in,
+        bookingsTemplate[2].check_out,
+        bookingsTemplate[2].discount,
+        room
+    )
+    room.bookings = [booking1, booking2, booking3]
+
+    const roomPriceInCents = (room.rate - (room.discount / 100)) * 100
+
+    test('Room rate is in cents', () => {
+        expect(room.getRateInCents()).toEqual(roomPriceInCents)
     })
 })

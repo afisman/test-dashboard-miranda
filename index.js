@@ -7,7 +7,7 @@ class Room {
     }
 
     getRateInCents() {
-
+        return (this.rate - (this.discount / 100)) * 100
     }
 
     isOccupied(date) {
@@ -26,14 +26,14 @@ class Room {
 }
 
 class Booking {
-    // constructor(name, email, check_in, check_out, discount, room) {
-    //     this.name = name;
-    //     this.email = email;
-    //     this.check_in = check_in;
-    //     this.check_out = check_out;
-    //     this.discount = discount;
-    //     this.room = room;
-    // }
+    constructor(name, email, check_in, check_out, discount, room) {
+        this.name = name;
+        this.email = email;
+        this.check_in = check_in;
+        this.check_out = check_out;
+        this.discount = discount;
+        this.room = room;
+    }
 
     getFee() {
 
