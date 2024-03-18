@@ -99,7 +99,7 @@ describe("Check variable types", () => {
 describe('Test methods in Room object', () => {
     const room = new Room({ ...roomsTemplate[0] });
 
-    const roomPriceInCents = (room.rate - (room.discount / 100)) * 100;
+    const roomPriceInCents = (room.rate - (room.rate * (room.discount / 100))) * 100;
 
     test('Room rate is in cents', () => {
         expect(room.getRateInCents()).toEqual(roomPriceInCents)

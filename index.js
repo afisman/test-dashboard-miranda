@@ -7,7 +7,9 @@ class Room {
     }
 
     getRateInCents() {
-        return (this.rate - (this.discount / 100)) * 100
+        const CENTS = 100;
+        const discountedRate = (this.rate * (this.discount / 100))
+        return (this.rate - discountedRate) * CENTS
     }
 
     discountError() {
