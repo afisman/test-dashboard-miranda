@@ -22,8 +22,8 @@ const bookingsTemplate = [
     {
         name: 'John Doe',
         email: 'johndoe@email.com',
-        check_in: "2024-02-04",
-        check_out: "2024-02-07",
+        check_in: "2024-03-01",
+        check_out: "2024-03-07",
         discount: 10
     },
     {
@@ -36,8 +36,22 @@ const bookingsTemplate = [
     {
         name: 'Alice Cooper',
         email: 'alicecooper@email.com',
-        check_in: "2024-02-14",
-        check_out: "2024-02-18",
+        check_in: "2024-03-01",
+        check_out: "2024-03-07",
+        discount: 15
+    },
+    {
+        name: 'Jane Smith',
+        email: 'jsmith@email.com',
+        check_in: "2024-03-01",
+        check_out: "2024-03-07",
+        discount: 5
+    },
+    {
+        name: 'Alice Cooper',
+        email: 'alicecooper@email.com',
+        check_in: "2024-03-01",
+        check_out: "2024-03-07",
         discount: 15
     }
 ]
@@ -106,7 +120,7 @@ describe('Test methods in Room object', () => {
     })
 })
 
-describe('Test methods in Room object', () => {
+describe('Tests occupied methods in Room object', () => {
     const room = new Room({ ...roomsTemplate[0] });
 
     const booking1 = new Booking(
@@ -121,11 +135,69 @@ describe('Test methods in Room object', () => {
 
     room.bookings = [booking1, booking2, booking3]
 
-    console.log(room.bookings)
     test('Room is occupied in 2024-02-06', () => {
         expect(room.isOccupied("2024-02-06")).toEqual(true)
     })
     test('Room is not occupied in 2024-02-07', () => {
         expect(room.isOccupied("2024-02-07")).toBeFalsy()
     })
+})
+
+describe('Tests occupancy percentage for room method in Room object', () => {
+    const room = new Room({ ...roomsTemplate[0] });
+
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room }
+    )
+
+    room.bookings = [booking1, booking2, booking3]
+
+    test('Room percentage of occupancy between 2024-02-06 and 2024-03-01 to equal 0', () => {
+        expect(room.occupancyPercentage("2024-02-06", "2024-02-08")).toEqual(0)
+    })
+    test('Room percentage of occupancy between 2024-02-06 and 2024-03-01', () => {
+        expect(room.occupancyPercentage("2024-02-06", "2024-03-01")).toEqual(4)
+    })
+})
+
+describe('Tests occupancy percentage for room method in Room object', () => {
+    const room1 = new Room({ ...roomsTemplate[0] });
+    const room2 = new Room({ ...roomsTemplate[1] });
+    const room3 = new Room({ ...roomsTemplate[2] });
+
+
+
+
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room2 }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room1 }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room1 }
+    )
+    const booking4 = new Booking(
+        { ...bookingsTemplate[3], room: room3 }
+    )
+    const booking5 = new Booking(
+        { ...bookingsTemplate[4], room: room1 }
+    )
+
+    room1.bookings = [booking5, booking2, booking3]
+    room2.bookings = [booking1]
+    room3.bookings = [booking4]
+
+    test('Room percentage of occupancy between 2024-03-02 and 2024-03-04', () => {
+        expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-03-02", "2024-03-04")).toEqual(100)
+    })
+    // test('Room percentage of occupancy between 2024-02-06 and 2024-03-01', () => {
+    //     expect(room.occupancyPercentage("2024-02-06", "2024-03-01")).toEqual(24)
+    // })
 })

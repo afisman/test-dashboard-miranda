@@ -31,14 +31,37 @@ class Room {
     }
 
     occupancyPercentage(startDate, endDate) {
+        let occupiedDays = 0;
+        let totalDays = 0;
 
+        const firstDate = new Date(startDate);
+        const secondDate = new Date(endDate);
+
+
+        while (firstDate <= secondDate) {
+            totalDays++
+            if (this.isOccupied(firstDate.toString())) {
+                occupiedDays++
+            }
+
+            firstDate.setDate(firstDate.getDate() + 1)
+        }
+
+        return Math.round((occupiedDays / totalDays) * 100)
     }
 
     static totalOccupancyPercentage(rooms, startDate, endDate) {
+        let totalSum = 0
 
+        rooms.forEach(room => {
+            totalSum += room.occupancyPercentage(startDate, endDate)
+        })
+        return Math.round(totalSum / rooms.length)
     }
 
-    static availableRooms() { }
+    static availableRooms() {
+        return
+    }
 }
 
 class Booking {
@@ -60,7 +83,7 @@ class Booking {
     }
 
     getFee() {
-
+        return;
     }
 }
 
