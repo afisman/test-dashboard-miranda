@@ -59,7 +59,7 @@ class Room {
         return Math.round(totalSum / rooms.length)
     }
 
-    static availableRooms() {
+    static availableRooms(rooms, startDate, endDate) {
         return
     }
 }

@@ -135,8 +135,8 @@ describe('Tests occupied methods in Room object', () => {
 
     room.bookings = [booking1, booking2, booking3]
 
-    test('Room is occupied in 2024-02-06', () => {
-        expect(room.isOccupied("2024-02-06")).toEqual(true)
+    test('Room is occupied in 2024-03-06', () => {
+        expect(room.isOccupied("2024-03-06")).toEqual(true)
     })
     test('Room is not occupied in 2024-02-07', () => {
         expect(room.isOccupied("2024-02-07")).toBeFalsy()
@@ -162,7 +162,7 @@ describe('Tests occupancy percentage for room method in Room object', () => {
         expect(room.occupancyPercentage("2024-02-06", "2024-02-08")).toEqual(0)
     })
     test('Room percentage of occupancy between 2024-02-06 and 2024-03-01', () => {
-        expect(room.occupancyPercentage("2024-02-06", "2024-03-01")).toEqual(4)
+        expect(room.occupancyPercentage("2024-03-01", "2024-03-04")).toEqual(100)
     })
 })
 
@@ -194,10 +194,19 @@ describe('Tests occupancy percentage for room method in Room object', () => {
     room2.bookings = [booking1]
     room3.bookings = [booking4]
 
-    test('Room percentage of occupancy between 2024-03-02 and 2024-03-04', () => {
+    test('Room percentage of occupancy between 2024-03-02 and 2024-03-04, 100%', () => {
         expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-03-02", "2024-03-04")).toEqual(100)
     })
-    // test('Room percentage of occupancy between 2024-02-06 and 2024-03-01', () => {
-    //     expect(room.occupancyPercentage("2024-02-06", "2024-03-01")).toEqual(24)
-    // })
+    test('Room percentage of occupancy between 2024-02-23 and 2024-02-29, 0%', () => {
+        expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-02-23", "2024-02-29")).toEqual(0)
+    })
+    test('Room percentage of occupancy between 2024-03-06 and 2024-03-09, 25%', () => {
+        expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-03-06", "2024-03-09")).toEqual(25)
+    })
+    test('Room percentage of occupancy between 2024-03-05 and 2024-03-09, 40%', () => {
+        expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-03-05", "2024-03-09")).toEqual(40)
+    })
+    test('Room percentage of occupancy between 2024-02-27 and 2024-03-03, 50%', () => {
+        expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-02-27", "2024-03-03")).toEqual(50)
+    })
 })
