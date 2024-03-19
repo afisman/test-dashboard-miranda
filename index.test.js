@@ -171,9 +171,6 @@ describe('Tests occupancy percentage for room method in Room object', () => {
     const room2 = new Room({ ...roomsTemplate[1] });
     const room3 = new Room({ ...roomsTemplate[2] });
 
-
-
-
     const booking1 = new Booking(
         { ...bookingsTemplate[0], room: room2 }
     )
@@ -209,4 +206,62 @@ describe('Tests occupancy percentage for room method in Room object', () => {
     test('Room percentage of occupancy between 2024-02-27 and 2024-03-03, 50%', () => {
         expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-02-27", "2024-03-03")).toEqual(50)
     })
+})
+
+describe('Tests available rooms for room method in Room object', () => {
+    const room1 = new Room({ ...roomsTemplate[0] });
+    const room2 = new Room({ ...roomsTemplate[1] });
+    const room3 = new Room({ ...roomsTemplate[2] });
+
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], check_in: '2024-02-13', check_out: '2024-02-16', room: room2 }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room1 }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room1 }
+    )
+    const booking4 = new Booking(
+        { ...bookingsTemplate[3], room: room3 }
+    )
+    const booking5 = new Booking(
+        { ...bookingsTemplate[4], room: room1 }
+    )
+
+    room1.bookings = [booking5, booking2, booking3]
+    room2.bookings = [booking1]
+    room3.bookings = [booking4]
+
+    test('Available rooms between 2024-02-06 and 2024-02-06 to return all rooms', () => {
+        expect(Room.availableRooms([room1, room2, room3], "2024-02-06", "2024-02-08")).toEqual([room1, room2, room3])
+    })
+    test('Available rooms between 2024-03-01 and 2024-03-05 to return room2', () => {
+        expect(Room.availableRooms([room1, room2, room3], "2024-03-01", "2024-03-05")).toEqual([room2])
+    })
+    test('Available rooms between 2024-02-14 and 2024-03-05 to return empty array', () => {
+        expect(Room.availableRooms([room1, room2, room3], "2024-02-14", "2024-03-05")).toMatchObject([])
+    })
+})
+
+
+describe('Tests get fee in booking', () => {
+    const room = new Room({ ...roomsTemplate[0] });
+
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room }
+    )
+
+    room.bookings = [booking1, booking2, booking3]
+
+    test('Booking fee in booking 1', () => {
+        expect(room.occupancyPercentage("2024-02-06", "2024-02-08")).toEqual(0)
+    })
+
 })

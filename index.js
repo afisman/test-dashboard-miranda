@@ -60,7 +60,11 @@ class Room {
     }
 
     static availableRooms(rooms, startDate, endDate) {
-        return
+        const availableRooms = rooms.filter(room => (
+            room.occupancyPercentage(startDate, endDate) > 0 ? false : true
+        ))
+
+        return availableRooms
     }
 }
 
