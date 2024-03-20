@@ -3,8 +3,8 @@ const { Room, Booking } = require('./index');
 const roomsTemplate = [
     {
         name: 'Suite-142',
-        rate: 265.10,
-        discount: 30
+        rate: 250,
+        discount: 10
     },
     {
         name: 'Single-022',
@@ -252,16 +252,22 @@ describe('Tests get fee in booking', () => {
         { ...bookingsTemplate[0], room: room }
     )
     const booking2 = new Booking(
-        { ...bookingsTemplate[1], room: room }
+        { ...bookingsTemplate[1], discount: 110, room: room }
     )
     const booking3 = new Booking(
-        { ...bookingsTemplate[2], room: room }
+        { ...bookingsTemplate[2], discount: -10, room: room }
     )
 
     room.bookings = [booking1, booking2, booking3]
 
     test('Booking fee in booking 1', () => {
-        expect(room.occupancyPercentage("2024-02-06", "2024-02-08")).toEqual(0)
+        expect(booking1.getFee()).toEqual(20250)
+    })
+    test('Booking fee in booking 2, discount more than 100', () => {
+        expect(booking2.getFee()).toEqual(0)
+    })
+    test('Booking fee in booking 3, less than 0 discount', () => {
+        expect(booking3.getFee()).toEqual(22500)
     })
 
 })

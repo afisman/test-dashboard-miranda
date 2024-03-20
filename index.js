@@ -12,14 +12,6 @@ class Room {
         return (this.rate - discountedRate) * CENTS
     }
 
-    discountError() {
-        if (this.discount < 0 || this.discount >= 100) {
-            throw new Error('The discount number needs to be lower between 0 and 100')
-        } else {
-            return this.discount;
-        }
-    }
-
     isOccupied(date) {
         let occupied = false;
         let formattedDate = new Date(date)
@@ -78,16 +70,23 @@ class Booking {
         this.room = room;
     }
 
-    discountError() {
-        if (this.discount + this.room.discount < 0 || this.discount + this.room.discount >= 100) {
-            throw new Error('The discount number needs to be lower between 0 and 100')
-        } else {
-            return this.discount;
-        }
-    }
-
     getFee() {
-        return;
+        if (this.discount > 100) {
+            this.discount = 100;
+        }
+        if (this.room.discount > 100) {
+            this.room.discount = 100;
+            this.discount = 0;
+        }
+        if (this.discount < 0) {
+            this.discount = 0;
+        }
+        if (this.room.discount < 0) {
+            this.room.discount = 0;
+        }
+
+        const fee = this.room.getRateInCents() - (this.discount / 100) * this.room.getRateInCents()
+        return fee;
     }
 }
 
