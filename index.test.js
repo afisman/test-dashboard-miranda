@@ -141,6 +141,9 @@ describe('Tests occupied methods in Room object', () => {
     test('Room is not occupied in 2024-02-07', () => {
         expect(room.isOccupied("2024-02-07")).toBeFalsy()
     })
+    test('Room is not occupied in 2024-04-07', () => {
+        expect(room.isOccupied("2024-04-07")).toBeFalsy()
+    })
 })
 
 describe('Tests occupancy percentage for room method in Room object', () => {
