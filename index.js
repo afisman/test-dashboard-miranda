@@ -15,7 +15,7 @@ class Room {
     isOccupied(date) {
         let occupied = false;
         let formattedDate = new Date(date)
-        this.bookings.map((booking) => {
+        this.bookings.forEach((booking) => {
             if (new Date(booking.check_in) <= formattedDate && formattedDate < new Date(booking.check_out))
                 occupied = true
         })
@@ -71,21 +71,10 @@ class Booking {
     }
 
     getFee() {
-        if (this.discount > 100) {
-            this.discount = 100;
-        }
-        if (this.room.discount > 100) {
-            this.room.discount = 100;
-            this.discount = 0;
-        }
-        if (this.discount < 0) {
-            this.discount = 0;
-        }
-        if (this.room.discount < 0) {
-            this.room.discount = 0;
-        }
+        const correctedDiscount1 = Math.min(100, this.discount)
+        const correctedDiscount2 = Math.max(0, correctedDiscount1)
 
-        const fee = this.room.getRateInCents() - (this.discount / 100) * this.room.getRateInCents()
+        const fee = this.room.getRateInCents() - (correctedDiscount2 / 100) * this.room.getRateInCents()
         return fee;
     }
 }

@@ -165,6 +165,9 @@ describe('Tests occupancy percentage for room method in Room object', () => {
         expect(room.occupancyPercentage("2024-02-06", "2024-02-08")).toEqual(0)
     })
     test('Room percentage of occupancy between 2024-02-06 and 2024-03-01', () => {
+        expect(room.occupancyPercentage("2024-02-27", "2024-03-02")).toEqual(40)
+    })
+    test('Room percentage of occupancy between 2024-02-06 and 2024-03-01', () => {
         expect(room.occupancyPercentage("2024-03-01", "2024-03-04")).toEqual(100)
     })
 })
