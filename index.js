@@ -52,11 +52,9 @@ class Room {
     }
 
     static availableRooms(rooms, startDate, endDate) {
-        const availableRooms = rooms.filter(room => (
-            room.occupancyPercentage(startDate, endDate) > 0 ? false : true
+        return rooms.filter(room => (
+            room.occupancyPercentage(startDate, endDate) === 0
         ))
-
-        return availableRooms
     }
 }
 
@@ -74,7 +72,8 @@ class Booking {
         const correctedDiscount1 = Math.min(100, this.discount)
         const correctedDiscount2 = Math.max(0, correctedDiscount1)
 
-        const fee = this.room.getRateInCents() - (correctedDiscount2 / 100) * this.room.getRateInCents()
+        const fee = this.room.getRateInCents() - (correctedDiscount2 / 100) * this.room.getRateInCents();
+        const feePerstay =
         return fee;
     }
 }
