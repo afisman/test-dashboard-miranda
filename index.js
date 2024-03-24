@@ -73,9 +73,23 @@ class Booking {
         const correctedDiscount2 = Math.max(0, correctedDiscount1)
 
         const fee = this.room.getRateInCents() - (correctedDiscount2 / 100) * this.room.getRateInCents();
-        const feePerstay =
-        return fee;
+        const bookingLength = getDatesInRange(this.check_in, this.check_out)
+        return fee * bookingLength;
     }
+}
+
+function getDatesInRange(startDate, endDate) {
+    const start = new Date(new Date(startDate))
+    const end = new Date(new Date(endDate))
+
+    const date = new Date(start.getTime())
+    const dates = [];
+
+    while (date <= end) {
+        dates.push(new Date(date).toISOString().slice(0, 10));
+        date.setDate(date.getDate() + 1);
+    }
+    return dates.length - 1;
 }
 
 module.exports = { Room, Booking }

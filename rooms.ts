@@ -5,6 +5,7 @@ export interface RoomInterface {
     rate: number
     discount: number
     bookings: BookingInterface[] | null
+    getRateInCents(): number
     occupancyPercentage(startDate: string, endDate: string): number
 }
 
@@ -74,3 +75,5 @@ export class Room implements RoomInterface {
         ))
     }
 }
+
+export default Room
