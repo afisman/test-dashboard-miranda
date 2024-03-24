@@ -33,7 +33,6 @@ export class Booking implements BookingInterface {
         const bookingLength: number = getBookingLength(this.check_in, this.check_out)
         let fee: number = 0
         if (this.room) {
-
             fee = this.room?.getRateInCents() - (correctedDiscount2 / 100) * this.room?.getRateInCents();
         }
         return fee * bookingLength
