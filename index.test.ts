@@ -1,61 +1,70 @@
-import Booking from "./bookings";
-import Room from "./rooms";
+import Booking, { BookingInterface } from "./bookings";
+import Room, { RoomInterface } from "./rooms";
 import { describe, expect, test } from '@jest/globals';
 
 
-const roomsTemplate = [
+
+const roomsTemplate: RoomInterface[] = [
     {
         name: 'Suite-142',
         rate: 250,
-        discount: 10
+        discount: 10,
+        bookings: []
     },
     {
         name: 'Single-022',
         rate: 125,
-        discount: 15
+        discount: 15,
+        bookings: []
     },
     {
         name: 'Double-111',
         rate: 175,
-        discount: 20
+        discount: 20,
+        bookings: []
     }
 ]
 
-const bookingsTemplate = [
+const bookingsTemplate: BookingInterface[] = [
     {
         name: 'John Doe',
         email: 'johndoe@email.com',
         check_in: "2024-03-01",
         check_out: "2024-03-07",
-        discount: 10
+        discount: 10,
+        room: null
     },
     {
         name: 'Jane Smith',
         email: 'jsmith@email.com',
         check_in: "2024-03-01",
         check_out: "2024-03-07",
-        discount: 5
+        discount: 5,
+        room: null
     },
     {
         name: 'Alice Cooper',
         email: 'alicecooper@email.com',
         check_in: "2024-03-01",
         check_out: "2024-03-07",
-        discount: 15
+        discount: 15,
+        room: null
     },
     {
         name: 'Jane Smith',
         email: 'jsmith@email.com',
         check_in: "2024-03-01",
         check_out: "2024-03-07",
-        discount: 5
+        discount: 5,
+        room: null
     },
     {
         name: 'Alice Cooper',
         email: 'alicecooper@email.com',
         check_in: "2024-03-01",
         check_out: "2024-03-07",
-        discount: 15
+        discount: 15,
+        room: null
     }
 ]
 
