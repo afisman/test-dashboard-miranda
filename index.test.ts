@@ -1,5 +1,7 @@
 import Booking from "./bookings";
 import Room from "./rooms";
+import { describe, expect, test } from '@jest/globals';
+
 
 const roomsTemplate = [
     {
@@ -58,10 +60,16 @@ const bookingsTemplate = [
 ]
 
 describe("Check variable types", () => {
-    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount, []);
-    const booking1 = new Booking(bookingsTemplate[0].name, bookingsTemplate[0].email, bookingsTemplate[0].check_in, bookingsTemplate[0].check_out, bookingsTemplate[0].discount, room)
-    const booking2 = new Booking(bookingsTemplate[1].name, bookingsTemplate[1].email, bookingsTemplate[1].check_in, bookingsTemplate[1].check_out, bookingsTemplate[1].discount, room)
-    const booking3 = new Booking(bookingsTemplate[2].name, bookingsTemplate[2].email, bookingsTemplate[2].check_in, bookingsTemplate[2].check_out, bookingsTemplate[2].discount, room)
+    const room = new Room({ ...roomsTemplate[0], bookings: [] });
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room }
+    )
 
     room.bookings = [booking1, booking2, booking3]
 
@@ -106,7 +114,7 @@ describe("Check variable types", () => {
 })
 
 describe('Test methods in Room object', () => {
-    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount, []);
+    const room = new Room({ ...roomsTemplate[0], bookings: [] });
 
     const roomPriceInCents = (room.rate - (room.rate * (room.discount / 100))) * 100;
 
@@ -116,10 +124,16 @@ describe('Test methods in Room object', () => {
 })
 
 describe('Tests occupied methods in Room object', () => {
-    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount, []);
-    const booking1 = new Booking(bookingsTemplate[0].name, bookingsTemplate[0].email, bookingsTemplate[0].check_in, bookingsTemplate[0].check_out, bookingsTemplate[0].discount, room)
-    const booking2 = new Booking(bookingsTemplate[1].name, bookingsTemplate[1].email, bookingsTemplate[1].check_in, bookingsTemplate[1].check_out, bookingsTemplate[1].discount, room)
-    const booking3 = new Booking(bookingsTemplate[2].name, bookingsTemplate[2].email, bookingsTemplate[2].check_in, bookingsTemplate[2].check_out, bookingsTemplate[2].discount, room)
+    const room = new Room({ ...roomsTemplate[0], bookings: [] });
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room }
+    )
 
     room.bookings = [booking1, booking2, booking3]
 
@@ -135,10 +149,16 @@ describe('Tests occupied methods in Room object', () => {
 })
 
 describe('Tests occupancy percentage for room method in Room object', () => {
-    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount, []);
-    const booking1 = new Booking(bookingsTemplate[0].name, bookingsTemplate[0].email, bookingsTemplate[0].check_in, bookingsTemplate[0].check_out, bookingsTemplate[0].discount, room)
-    const booking2 = new Booking(bookingsTemplate[1].name, bookingsTemplate[1].email, bookingsTemplate[1].check_in, bookingsTemplate[1].check_out, bookingsTemplate[1].discount, room)
-    const booking3 = new Booking(bookingsTemplate[2].name, bookingsTemplate[2].email, bookingsTemplate[2].check_in, bookingsTemplate[2].check_out, bookingsTemplate[2].discount, room)
+    const room = new Room({ ...roomsTemplate[0], bookings: [] });
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room }
+    )
 
     room.bookings = [booking1, booking2, booking3]
 
@@ -154,17 +174,29 @@ describe('Tests occupancy percentage for room method in Room object', () => {
 })
 
 describe('Tests occupancy percentage for room method in Room object', () => {
-    const room1 = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount, []);
-    const room2 = new Room(roomsTemplate[1].name, roomsTemplate[1].rate, roomsTemplate[1].discount, []);
-    const room3 = new Room(roomsTemplate[2].name, roomsTemplate[2].rate, roomsTemplate[2].discount, []);
+    const room1 = new Room({ ...roomsTemplate[0], bookings: [] });
+    const room2 = new Room({ ...roomsTemplate[1], bookings: [] });
+    const room3 = new Room({ ...roomsTemplate[2], bookings: [] });
 
-    const booking1 = new Booking(bookingsTemplate[0].name, bookingsTemplate[0].email, bookingsTemplate[0].check_in, bookingsTemplate[0].check_out, bookingsTemplate[0].discount, room1)
-    const booking2 = new Booking(bookingsTemplate[1].name, bookingsTemplate[1].email, bookingsTemplate[1].check_in, bookingsTemplate[1].check_out, bookingsTemplate[1].discount, room2)
-    const booking3 = new Booking(bookingsTemplate[2].name, bookingsTemplate[2].email, bookingsTemplate[2].check_in, bookingsTemplate[2].check_out, bookingsTemplate[2].discount, room3)
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room2 }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room1 }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room1 }
+    )
+    const booking4 = new Booking(
+        { ...bookingsTemplate[3], room: room3 }
+    )
+    const booking5 = new Booking(
+        { ...bookingsTemplate[4], room: room1 }
+    )
 
-    room1.bookings = [booking1]
-    room2.bookings = [booking2]
-    room3.bookings = [booking3]
+    room1.bookings = [booking5, booking2, booking3]
+    room2.bookings = [booking1]
+    room3.bookings = [booking4]
 
     test('Room percentage of occupancy between 2024-03-02 and 2024-03-04, 100%', () => {
         expect(Room.totalOccupancyPercentage([room1, room2, room3], "2024-03-02", "2024-03-04")).toEqual(100)
@@ -184,16 +216,25 @@ describe('Tests occupancy percentage for room method in Room object', () => {
 })
 
 describe('Tests available rooms for room method in Room object', () => {
-    const room1 = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount, []);
-    const room2 = new Room(roomsTemplate[1].name, roomsTemplate[1].rate, roomsTemplate[1].discount, []);
-    const room3 = new Room(roomsTemplate[2].name, roomsTemplate[2].rate, roomsTemplate[2].discount, []);
+    const room1 = new Room({ ...roomsTemplate[0], bookings: [] });
+    const room2 = new Room({ ...roomsTemplate[1], bookings: [] });
+    const room3 = new Room({ ...roomsTemplate[2], bookings: [] });
 
-    const booking1 = new Booking(bookingsTemplate[0].name, bookingsTemplate[0].email, '2024-02-13', '2024-02-16', bookingsTemplate[0].discount, room1)
-    const booking2 = new Booking(bookingsTemplate[1].name, bookingsTemplate[1].email, bookingsTemplate[1].check_in, bookingsTemplate[1].check_out, bookingsTemplate[1].discount, room2)
-    const booking3 = new Booking(bookingsTemplate[2].name, bookingsTemplate[2].email, bookingsTemplate[2].check_in, bookingsTemplate[2].check_out, bookingsTemplate[2].discount, room3)
-
-    const booking4 = new Booking(bookingsTemplate[3].name, bookingsTemplate[3].email, bookingsTemplate[3].check_in, bookingsTemplate[3].check_out, bookingsTemplate[3].discount, room3)
-    const booking5 = new Booking(bookingsTemplate[4].name, bookingsTemplate[4].email, bookingsTemplate[4].check_in, bookingsTemplate[4].check_out, bookingsTemplate[4].discount, room1)
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], check_in: '2024-02-13', check_out: '2024-02-16', room: room2 }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], room: room1 }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], room: room1 }
+    )
+    const booking4 = new Booking(
+        { ...bookingsTemplate[3], room: room3 }
+    )
+    const booking5 = new Booking(
+        { ...bookingsTemplate[4], room: room1 }
+    )
 
     room1.bookings = [booking5, booking2, booking3]
     room2.bookings = [booking1]
@@ -212,11 +253,17 @@ describe('Tests available rooms for room method in Room object', () => {
 
 
 describe('Tests get fee in booking', () => {
-    const room = new Room(roomsTemplate[0].name, roomsTemplate[0].rate, roomsTemplate[0].discount, []);
+    const room = new Room({ ...roomsTemplate[0], bookings: [] });
 
-    const booking1 = new Booking(bookingsTemplate[0].name, bookingsTemplate[0].email, bookingsTemplate[0].check_in, bookingsTemplate[0].check_out, bookingsTemplate[0].discount, room)
-    const booking2 = new Booking(bookingsTemplate[1].name, bookingsTemplate[1].email, bookingsTemplate[1].check_in, bookingsTemplate[1].check_out, 110, room)
-    const booking3 = new Booking(bookingsTemplate[2].name, bookingsTemplate[2].email, bookingsTemplate[2].check_in, bookingsTemplate[2].check_out, -10, room)
+    const booking1 = new Booking(
+        { ...bookingsTemplate[0], room: room }
+    )
+    const booking2 = new Booking(
+        { ...bookingsTemplate[1], discount: 110, room: room }
+    )
+    const booking3 = new Booking(
+        { ...bookingsTemplate[2], discount: -10, room: room }
+    )
 
 
     room.bookings = [booking1, booking2, booking3]

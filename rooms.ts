@@ -1,21 +1,19 @@
-import { BookingInterface } from "./bookings";
+import Booking from "./bookings";
 
 export interface RoomInterface {
     name: string
     rate: number
     discount: number
-    bookings: BookingInterface[] | null
-    getRateInCents(): number
-    occupancyPercentage(startDate: string, endDate: string): number
+    bookings: Booking[] | null
 }
 
 export class Room implements RoomInterface {
     name: string
     rate: number
     discount: number
-    bookings: BookingInterface[] | null
+    bookings: Booking[] | null
 
-    constructor(name: string, rate: number, discount: number, bookings: BookingInterface[] | null) {
+    constructor({ name, rate, discount, bookings }: RoomInterface) {
 
         this.name = name,
             this.rate = rate,
@@ -60,7 +58,7 @@ export class Room implements RoomInterface {
         return Math.round((occupiedDays / totalDays) * 100)
     }
 
-    static totalOccupancyPercentage(rooms: RoomInterface[], startDate: string, endDate: string): number {
+    static totalOccupancyPercentage(rooms: Room[], startDate: string, endDate: string): number {
         let totalSum: number = 0
 
         rooms.forEach(room => {
@@ -69,7 +67,7 @@ export class Room implements RoomInterface {
         return Math.round(totalSum / rooms.length)
     }
 
-    static availableRooms(rooms: RoomInterface[], startDate: string, endDate: string): RoomInterface[] {
+    static availableRooms(rooms: Room[], startDate: string, endDate: string): Room[] {
         return rooms.filter(room => (
             room.occupancyPercentage(startDate, endDate) === 0
         ))

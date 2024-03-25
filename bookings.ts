@@ -1,4 +1,4 @@
-import { RoomInterface } from './rooms';
+import Room from './rooms';
 
 export interface BookingInterface {
     name: string
@@ -6,7 +6,7 @@ export interface BookingInterface {
     check_in: string
     check_out: string
     discount: number
-    room: RoomInterface | null
+    room: Room | null
 }
 
 export class Booking implements BookingInterface {
@@ -15,9 +15,9 @@ export class Booking implements BookingInterface {
     check_in: string
     check_out: string
     discount: number
-    room: RoomInterface | null
+    room: Room | null
 
-    constructor(name: string, email: string, check_in: string, check_out: string, discount: number, room: RoomInterface | null) {
+    constructor({ name, email, check_in, check_out, discount, room }: BookingInterface) {
         this.name = name,
             this.email = email,
             this.check_in = check_in,
