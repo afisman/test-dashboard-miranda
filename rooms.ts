@@ -4,14 +4,14 @@ export interface RoomInterface {
     name: string
     rate: number
     discount: number
-    bookings: Booking[] | null
+    bookings: Booking[] | []
 }
 
 export class Room implements RoomInterface {
     name: string
     rate: number
     discount: number
-    bookings: Booking[] | null
+    bookings: Booking[] | []
 
     constructor({ name, rate, discount, bookings }: RoomInterface) {
 
