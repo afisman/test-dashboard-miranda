@@ -1,6 +1,7 @@
-import Booking, { BookingInterface } from "./bookings";
-import Room, { RoomInterface } from "./rooms";
+import { BookingInterface } from "./bookings";
+import { RoomInterface } from "./rooms";
 import { describe, expect, test } from '@jest/globals';
+import { Booking, Room } from "./index";
 
 
 
